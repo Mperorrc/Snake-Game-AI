@@ -31,7 +31,6 @@ class SnakeGame:
     def __init__(self, width=640, height=480):
         self.width = width
         self.height = height
-        
         # init display
         self.display = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption('Snake Game')
@@ -44,10 +43,7 @@ class SnakeGame:
         self.direction = Direction.RIGHT
         
         self.head = Point(self.width/2, self.height/2)
-        self.snake = [self.head, 
-                      Point(self.head.x-BLOCK_SIZE, self.head.y),
-                      Point(self.head.x-(2*BLOCK_SIZE), self.head.y)]
-        
+        self.snake = [self.head, Point(self.head.x - BLOCK_SIZE, self.head.y), Point(self.head.x - (2*BLOCK_SIZE), self.head.y)]
         self.score = 0
         self.food = None
         self._place_food()
@@ -71,12 +67,13 @@ class SnakeGame:
 
         self._move(action)
         self.snake.insert(0, self.head)
-
+        
         reward = 0
         game_over = False
+
         if(self.is_collision() or self.frame_iteration > 100*len(self.snake)):
             game_over = True
-            reward = -10
+            reward = - 10
             return reward, game_over, self.score
 
         if self.head == self.food:
@@ -118,7 +115,7 @@ class SnakeGame:
         
     def _move(self, action):
        
-        clockwise_directions = [Direction.RIGHT,Direction.DOWN,Direction.LEFT,Direction.UP]
+        clockwise_directions = [Direction.RIGHT, Direction.DOWN, Direction.LEFT, Direction.UP]
         direction_idx = clockwise_directions.index(self.direction)
 
         if np.array_equal(action, [1, 0, 0]):
